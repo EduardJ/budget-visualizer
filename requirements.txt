@@ -1,0 +1,4 @@
+# the extraction pipeline (make extract data snippets verify); the viewer and its tests are Node (package.json)
+pdfplumber>=0.11
+pypdfium2>=4
+pillow>=10

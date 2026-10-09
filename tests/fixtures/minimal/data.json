@@ -1,0 +1,647 @@
+{
+ "meta": {
+  "law": "Sample Town Budget Act 2026 (synthetic test fixture)",
+  "pdf": "sample.pdf",
+  "pages": 1
+ },
+ "sources": [],
+ "kpis": [
+  {
+   "tab": "flow",
+   "key": "rev",
+   "label_en": "Revenue 2026",
+   "sub_en": "three lines",
+   "value": 1000000,
+   "unit": "eur",
+   "ref": "r4",
+   "col": "total",
+   "node": "pool"
+  },
+  {
+   "tab": "departments",
+   "key": "n",
+   "label_en": "Departments",
+   "value": 3,
+   "unit": "count",
+   "ref": "r4",
+   "col": "total"
+  }
+ ],
+ "refs": {
+  "r1": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Property tax",
+   "original_label": "Property tax",
+   "quote": "Property tax 600,000",
+   "unit": "EUR",
+   "values": {
+    "total": "600,000"
+   },
+   "method": "parsed",
+   "top": 100
+  },
+  "r2": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Fees and charges",
+   "original_label": "Fees and charges",
+   "quote": "Fees and charges 150,000",
+   "unit": "EUR",
+   "values": {
+    "total": "150,000"
+   },
+   "method": "parsed",
+   "top": 115
+  },
+  "r3": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "State grant",
+   "original_label": "State grant",
+   "quote": "State grant 250,000",
+   "unit": "EUR",
+   "values": {
+    "total": "250,000"
+   },
+   "method": "parsed",
+   "top": 130
+  },
+  "r4": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "All revenue",
+   "original_label": "All revenue",
+   "quote": "All revenue 1,000,000",
+   "unit": "EUR",
+   "values": {
+    "total": "1,000,000"
+   },
+   "method": "parsed",
+   "top": 145
+  },
+  "r5": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Roads department",
+   "original_label": "Roads department",
+   "quote": "Roads department 400,000",
+   "unit": "EUR",
+   "values": {
+    "total": "400,000"
+   },
+   "method": "parsed",
+   "top": 170
+  },
+  "r6": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Maintenance",
+   "original_label": "Maintenance",
+   "quote": "Maintenance 250,000",
+   "unit": "EUR",
+   "values": {
+    "total": "250,000"
+   },
+   "method": "parsed",
+   "top": 185
+  },
+  "r7": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "New roads",
+   "original_label": "New roads",
+   "quote": "New roads 150,000",
+   "unit": "EUR",
+   "values": {
+    "total": "150,000"
+   },
+   "method": "parsed",
+   "top": 200
+  },
+  "r8": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Schools department",
+   "original_label": "Schools department",
+   "quote": "Schools department 450,000",
+   "unit": "EUR",
+   "values": {
+    "total": "450,000"
+   },
+   "method": "parsed",
+   "top": 215
+  },
+  "r9": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Primary schools",
+   "original_label": "Primary schools",
+   "quote": "Primary schools 300,000",
+   "unit": "EUR",
+   "values": {
+    "total": "300,000"
+   },
+   "method": "parsed",
+   "top": 230
+  },
+  "r10": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Secondary schools",
+   "original_label": "Secondary schools",
+   "quote": "Secondary schools 150,000",
+   "unit": "EUR",
+   "values": {
+    "total": "150,000"
+   },
+   "method": "parsed",
+   "top": 245
+  },
+  "r11": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Town administration",
+   "original_label": "Town administration",
+   "quote": "Town administration 150,000",
+   "unit": "EUR",
+   "values": {
+    "total": "150,000"
+   },
+   "method": "parsed",
+   "top": 260
+  },
+  "r12": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Council and mayor",
+   "original_label": "Council and mayor",
+   "quote": "Council and mayor 150,000",
+   "unit": "EUR",
+   "values": {
+    "total": "150,000"
+   },
+   "method": "parsed",
+   "top": 275
+  },
+  "r13": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Wages",
+   "original_label": "Wages",
+   "quote": "Wages 490,000",
+   "unit": "EUR",
+   "values": {
+    "total": "490,000"
+   },
+   "method": "parsed",
+   "top": 290
+  },
+  "r14": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Goods and services",
+   "original_label": "Goods and services",
+   "quote": "Goods and services 280,000",
+   "unit": "EUR",
+   "values": {
+    "total": "280,000"
+   },
+   "method": "parsed",
+   "top": 305
+  },
+  "r15": {
+   "page": 1,
+   "table": "Table 1",
+   "row": "Capital investment",
+   "original_label": "Capital investment",
+   "quote": "Capital investment 230,000",
+   "unit": "EUR",
+   "values": {
+    "total": "230,000"
+   },
+   "method": "parsed",
+   "top": 320
+  }
+ },
+ "nodes": [
+  {
+   "id": "rev:tax",
+   "kind": "line",
+   "name_en": "Property tax",
+   "amount": 600000,
+   "ref": "r1",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "rev:fees",
+   "kind": "line",
+   "name_en": "Fees and charges",
+   "amount": 150000,
+   "ref": "r2",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "rev:grant",
+   "kind": "line",
+   "name_en": "State grant",
+   "amount": 250000,
+   "ref": "r3",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "pool",
+   "kind": "pool",
+   "name_en": "All revenue",
+   "amount": 1000000,
+   "ref": "r4",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "org:roads",
+   "kind": "org",
+   "name_en": "Roads department",
+   "amount": 400000,
+   "ref": "r5",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "cats": {
+    "wages": 100000,
+    "goods": 100000,
+    "capital": 200000
+   },
+   "staff": 20,
+   "code": "ROADS"
+  },
+  {
+   "id": "org:roads/p0",
+   "kind": "programme",
+   "name_en": "Maintenance",
+   "amount": 250000,
+   "ref": "r6",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "parent": "org:roads"
+  },
+  {
+   "id": "org:roads/p1",
+   "kind": "programme",
+   "name_en": "New roads",
+   "amount": 150000,
+   "ref": "r7",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "parent": "org:roads"
+  },
+  {
+   "id": "org:schools",
+   "kind": "org",
+   "name_en": "Schools department",
+   "amount": 450000,
+   "ref": "r8",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "cats": {
+    "wages": 300000,
+    "goods": 120000,
+    "capital": 30000
+   },
+   "staff": 22,
+   "code": "SCHOOLS"
+  },
+  {
+   "id": "org:schools/p0",
+   "kind": "programme",
+   "name_en": "Primary schools",
+   "amount": 300000,
+   "ref": "r9",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "parent": "org:schools"
+  },
+  {
+   "id": "org:schools/p1",
+   "kind": "programme",
+   "name_en": "Secondary schools",
+   "amount": 150000,
+   "ref": "r10",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "parent": "org:schools"
+  },
+  {
+   "id": "org:admin",
+   "kind": "org",
+   "name_en": "Town administration",
+   "amount": 150000,
+   "ref": "r11",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "cats": {
+    "wages": 90000,
+    "goods": 60000
+   },
+   "staff": 8,
+   "code": "ADMIN"
+  },
+  {
+   "id": "org:admin/p0",
+   "kind": "programme",
+   "name_en": "Council and mayor",
+   "amount": 150000,
+   "ref": "r12",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "city",
+   "parent": "org:admin"
+  },
+  {
+   "id": "cat:wages",
+   "kind": "category",
+   "name_en": "Wages",
+   "amount": 490000,
+   "ref": "r13",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "cat:goods",
+   "kind": "category",
+   "name_en": "Goods and services",
+   "amount": 280000,
+   "ref": "r14",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  },
+  {
+   "id": "cat:capital",
+   "kind": "category",
+   "name_en": "Capital investment",
+   "amount": 230000,
+   "ref": "r15",
+   "refCol": "total",
+   "flags": [],
+   "en_src": "translated",
+   "section": "overview"
+  }
+ ],
+ "flows": [
+  {
+   "id": "f1",
+   "source": "rev:tax",
+   "target": "pool",
+   "amount": 600000,
+   "ref": "r1",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f2",
+   "source": "rev:fees",
+   "target": "pool",
+   "amount": 150000,
+   "ref": "r2",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f3",
+   "source": "rev:grant",
+   "target": "pool",
+   "amount": 250000,
+   "ref": "r3",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f4",
+   "source": "pool",
+   "target": "org:roads",
+   "amount": 400000,
+   "ref": "r4",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f5",
+   "source": "org:roads",
+   "target": "cat:wages",
+   "amount": 100000,
+   "ref": "r5",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f6",
+   "source": "org:roads",
+   "target": "cat:goods",
+   "amount": 100000,
+   "ref": "r5",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f7",
+   "source": "org:roads",
+   "target": "cat:capital",
+   "amount": 200000,
+   "ref": "r5",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f8",
+   "source": "pool",
+   "target": "org:schools",
+   "amount": 450000,
+   "ref": "r4",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f9",
+   "source": "org:schools",
+   "target": "cat:wages",
+   "amount": 300000,
+   "ref": "r8",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f10",
+   "source": "org:schools",
+   "target": "cat:goods",
+   "amount": 120000,
+   "ref": "r8",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f11",
+   "source": "org:schools",
+   "target": "cat:capital",
+   "amount": 30000,
+   "ref": "r8",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f12",
+   "source": "pool",
+   "target": "org:admin",
+   "amount": 150000,
+   "ref": "r4",
+   "col": "total",
+   "kind": "hard"
+  },
+  {
+   "id": "f13",
+   "source": "org:admin",
+   "target": "cat:wages",
+   "amount": 90000,
+   "ref": "r11",
+   "col": "total",
+   "kind": "category"
+  },
+  {
+   "id": "f14",
+   "source": "org:admin",
+   "target": "cat:goods",
+   "amount": 60000,
+   "ref": "r11",
+   "col": "total",
+   "kind": "category"
+  }
+ ],
+ "checks": [
+  {
+   "id": "t1_sum",
+   "title": "Table 1: the revenue lines add up to the total",
+   "expected": 1000000,
+   "actual": 1000000,
+   "diff": 0,
+   "bound": 2,
+   "status": "pass",
+   "cls": null,
+   "kind": "sum",
+   "unit": "EUR",
+   "group": "Table 1",
+   "pages": [
+    1
+   ],
+   "refs": [
+    "r1",
+    "r2",
+    "r3",
+    "r4"
+   ],
+   "note": ""
+  },
+  {
+   "id": "t1_depts",
+   "title": "Table 1: departments add up to all revenue",
+   "expected": 1000000,
+   "actual": 1000001,
+   "diff": 1,
+   "bound": 2,
+   "status": "fail",
+   "cls": "rounding",
+   "kind": "sum",
+   "unit": "EUR",
+   "group": "Table 1",
+   "pages": [
+    1
+   ],
+   "refs": [
+    "r4"
+   ],
+   "note": "Within the rounding of the printed digits."
+  },
+  {
+   "id": "refs",
+   "title": "Every amount has a source reference",
+   "expected": 0,
+   "actual": 0,
+   "diff": 0,
+   "bound": 0,
+   "status": "pass",
+   "cls": null,
+   "kind": "count",
+   "pages": [
+    1
+   ],
+   "refs": [],
+   "note": ""
+  }
+ ],
+ "findings": [
+  {
+   "type": "mismatch",
+   "title": "Departments add up to $1 more than all revenue",
+   "cls": "rounding",
+   "expected": 1000000,
+   "actual": 1000001,
+   "diff": 1,
+   "pages": [
+    1
+   ],
+   "node": "pool"
+  },
+  {
+   "type": "note",
+   "title": "This is a synthetic test fixture, not a real budget.",
+   "pages": [
+    1
+   ]
+  }
+ ],
+ "tours": [
+  {
+   "id": "tax",
+   "title_en": "Follow the property tax",
+   "steps": [
+    {
+     "node": "rev:tax",
+     "flow": "f1",
+     "text_en": "Property tax is the largest revenue line."
+    },
+    {
+     "node": "org:schools",
+     "text_en": "Schools get the largest share."
+    }
+   ]
+  }
+ ],
+ "summary": {}
+}

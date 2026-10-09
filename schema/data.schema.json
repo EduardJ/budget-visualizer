@@ -1,0 +1,156 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "data.schema.json",
+  "title": "Normalised budget data (datasets/<id>/data.json)",
+  "description": "Everything the document says, as nodes and flows with a source reference for every number, plus the checks and findings of the exact audit. Produced by a dataset adapter; never edited by hand. Localised text uses <field>_<lang> (name_sq, name_en, title_sq...); unsuffixed title/note/type are English.",
+  "type": "object",
+  "required": ["meta", "refs", "nodes", "flows", "checks", "findings", "kpis", "tours"],
+  "$defs": {
+    "id": { "type": "string", "minLength": 1 },
+    "refId": { "type": "string", "pattern": "^r[0-9]+$" },
+    "amount": { "type": "number", "description": "Euros (or the document currency), never millions." },
+    "pages": { "type": "array", "items": { "type": "integer", "minimum": 1 } },
+    "cls": { "enum": ["error", "rounding", null] },
+    "ref": {
+      "type": "object",
+      "description": "Where a number was printed. values holds the printed tokens exactly as they appear.",
+      "required": ["page", "table", "original_label", "quote", "unit", "values"],
+      "properties": {
+        "page": { "type": "integer", "minimum": 1 },
+        "pages": { "$ref": "#/$defs/pages" },
+        "table": { "type": "string", "description": "Table name as printed, or 'computed'." },
+        "row": { "type": "string" },
+        "original_label": { "type": "string" },
+        "quote": { "type": "string", "description": "The raw printed line." },
+        "unit": { "type": "string", "examples": ["EUR", "EUR million", "mixed"] },
+        "values": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Column key -> printed token, e.g. {\"total\": \"1,194,770,851\"}." },
+        "method": { "enum": ["parsed", "computed", "ocr", "manual"], "default": "parsed" },
+        "top": { "type": ["number", "null"], "description": "y position of the line on the page (PDF points); used for page snippets." },
+        "components": { "type": "array", "items": { "$ref": "#/$defs/id" }, "description": "For computed refs: the nodes summed." },
+        "note": { "type": "string" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "kind", "amount"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["line", "group", "pool", "dest", "category", "org", "programme", "subprogramme", "municipality", "project", "difference"] },
+        "section": { "type": "string", "description": "Which part of the document; decides the data chunk and the level filter." },
+        "level": { "type": "integer" },
+        "parent": { "type": ["string", "null"], "description": "Hierarchy parent; children are drawn as card rows." },
+        "owner": { "type": "string", "description": "For projects: the organisation that runs it." },
+        "anchor": { "type": "string", "description": "Node to show on screen in place of this one (e.g. stocks, GDP)." },
+        "amount": { "$ref": "#/$defs/amount" },
+        "ref": { "oneOf": [{ "$ref": "#/$defs/refId" }, { "type": "null" }] },
+        "refCol": { "type": ["string", "null"], "description": "Column of ref.values holding this amount." },
+        "cats": { "type": "object", "additionalProperties": { "type": "number" }, "description": "Amount per economic category id." },
+        "staff": { "type": "number" },
+        "sources": { "type": "object", "additionalProperties": { "type": "object", "required": ["amount", "ref"],
+          "properties": { "amount": { "type": "number" }, "ref": { "$ref": "#/$defs/refId" }, "cats": { "type": "object" } }, "patternProperties": { "^label_": { "type": "string" } } } },
+        "prev": { "type": "number", "description": "Previous year's amount." },
+        "prev_ref": { "$ref": "#/$defs/refId" },
+        "prevCol": { "type": "string" },
+        "multi": { "type": "object", "additionalProperties": { "type": "number" }, "description": "Multi-year project amounts." },
+        "head_ref": { "$ref": "#/$defs/refId" },
+        "src_refs": { "type": "array", "items": { "$ref": "#/$defs/refId" } },
+        "revenue": { "type": "array", "items": { "type": "object", "required": ["label", "amount", "ref"] } },
+        "flags": { "type": "array", "items": { "type": "string" }, "description": "RECONCILIATION, ROUNDING, AMBIGUITY, NAME_TRUNCATED_IN_TABLE, or dataset-specific flags labelled in dataset.json." },
+        "en_src": { "enum": ["translated", "sq-only", "proper noun"], "description": "Where the English name comes from." },
+        "macro": { "type": "boolean" },
+        "stock": { "type": "boolean" },
+        "code": { "type": "string" }
+      },
+      "patternProperties": { "^(name|note)_[a-z]{2}$": { "type": "string" } }
+    },
+    "flow": {
+      "type": "object",
+      "required": ["id", "source", "target", "amount", "ref", "kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "source": { "$ref": "#/$defs/id" },
+        "target": { "$ref": "#/$defs/id" },
+        "amount": { "$ref": "#/$defs/amount" },
+        "ref": { "oneOf": [{ "$ref": "#/$defs/refId" }, { "type": "null" }] },
+        "col": { "type": "string" },
+        "kind": { "enum": ["hard", "category", "project", "difference", "source-link"] }
+      },
+      "patternProperties": { "^note(_[a-z]{2})?$": { "type": "string" } }
+    },
+    "check": {
+      "type": "object",
+      "required": ["id", "title", "expected", "actual", "diff", "status", "pages", "kind"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string" },
+        "expected": { "type": ["number", "null"] },
+        "actual": { "type": ["number", "null"] },
+        "diff": { "type": ["number", "null"] },
+        "bound": { "type": ["number", "string", "null"], "description": "Largest gap rounding of the printed digits could explain." },
+        "status": { "enum": ["pass", "fail"] },
+        "cls": { "$ref": "#/$defs/cls" },
+        "kind": { "type": "string", "examples": ["sum", "rounds", "claim", "count", "law"] },
+        "unit": { "type": ["string", "null"] },
+        "group": { "type": "string" },
+        "pages": { "$ref": "#/$defs/pages" },
+        "refs": { "type": "array", "items": { "type": "string" } }
+      },
+      "patternProperties": { "^(title|note)_[a-z]{2}$": { "type": "string" } }
+    },
+    "finding": {
+      "type": "object",
+      "required": ["type", "title"],
+      "properties": {
+        "type": { "enum": ["mismatch", "ambiguity", "note", "naming"] },
+        "title": { "type": "string" },
+        "cls": { "$ref": "#/$defs/cls" },
+        "pages": { "$ref": "#/$defs/pages" },
+        "node": { "$ref": "#/$defs/id" }
+      },
+      "patternProperties": { "^(title|type)_[a-z]{2}$": { "type": "string" } }
+    },
+    "kpi": {
+      "type": "object",
+      "required": ["tab", "key", "value"],
+      "properties": {
+        "tab": { "type": "string" },
+        "key": { "type": "string" },
+        "value": { "type": "number" },
+        "unit": { "enum": ["eur", "count"] },
+        "ref": { "oneOf": [{ "$ref": "#/$defs/refId" }, { "type": "null" }] },
+        "col": { "type": ["string", "null"] },
+        "prev": { "type": ["number", "null"] },
+        "prev_ref": { "oneOf": [{ "$ref": "#/$defs/refId" }, { "type": "null" }] },
+        "prev_col": { "type": ["string", "null"] },
+        "node": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }], "description": "Clicking the figure opens this node." }
+      },
+      "patternProperties": { "^(label|sub)_[a-z]{2}$": { "type": "string" } }
+    },
+    "tour": {
+      "type": "object",
+      "required": ["id", "steps"],
+      "properties": {
+        "id": { "type": "string" },
+        "steps": { "type": "array", "minItems": 1, "items": { "type": "object", "required": ["node"],
+          "properties": { "node": { "$ref": "#/$defs/id" }, "flow": { "oneOf": [{ "$ref": "#/$defs/id" }, { "type": "null" }] } }, "patternProperties": { "^text_[a-z]{2}$": { "type": "string" } } } }
+      },
+      "patternProperties": { "^title_[a-z]{2}$": { "type": "string" } }
+    }
+  },
+  "properties": {
+    "meta": {
+      "type": "object",
+      "required": ["law", "pdf"],
+      "properties": { "law": { "type": "string" }, "gazette": { "type": "string" }, "pdf": { "type": "string" }, "pages": { "type": "integer" } }
+    },
+    "sources": { "type": "array", "items": { "type": "object", "required": ["id", "table", "pages"] } },
+    "refs": { "type": "object", "propertyNames": { "$ref": "#/$defs/refId" }, "additionalProperties": { "$ref": "#/$defs/ref" } },
+    "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+    "flows": { "type": "array", "items": { "$ref": "#/$defs/flow" } },
+    "checks": { "type": "array", "items": { "$ref": "#/$defs/check" } },
+    "findings": { "type": "array", "items": { "$ref": "#/$defs/finding" } },
+    "kpis": { "type": "array", "items": { "$ref": "#/$defs/kpi" } },
+    "tours": { "type": "array", "items": { "$ref": "#/$defs/tour" } },
+    "summary": { "type": "object", "additionalProperties": { "type": ["number", "string", "null"] } }
+  }
+}

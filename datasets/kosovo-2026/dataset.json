@@ -1,0 +1,150 @@
+{
+  "$schema": "../../schema/dataset.schema.json",
+  "id": "kosovo-2026",
+  "pdf": "budget-2026.pdf",
+  "sourceLang": "sq",
+  "langs": ["sq", "en"],
+  "currency": "€",
+  "numberLocale": "en-US",
+  "totals": { "budget": "budget", "inflows": "pool" },
+  "categories": [
+    { "id": "wages", "color": "#2e7d6b", "name": { "sq": "Paga dhe shtesa", "en": "Wages and salaries" } },
+    { "id": "goods", "color": "#6f5aa8", "name": { "sq": "Mallra dhe shërbime", "en": "Goods and services" } },
+    { "id": "util", "color": "#8a8a2e", "name": { "sq": "Shpenzime komunale", "en": "Utilities" } },
+    { "id": "subs", "color": "#c2563a", "name": { "sq": "Subvencione dhe transfere", "en": "Subsidies and transfers" } },
+    { "id": "capital", "color": "#2f7fb8", "name": { "sq": "Investime kapitale", "en": "Capital investment" } },
+    { "id": "reserve", "color": "#8a8f99", "name": { "sq": "Rezerva", "en": "Reserves" } },
+    { "id": "interest", "color": "#6b4e3d", "name": { "sq": "Interesi", "en": "Interest" } },
+    { "id": "donor", "color": "#9c6ba0", "name": { "sq": "Grante të donatorëve", "en": "Donor grants" } }
+  ],
+  "colorRules": [
+    { "prefix": "fin:", "color": "fin", "ribbon": "either" },
+    { "prefix": "rev:", "color": "rev" },
+    { "prefix": "grp:", "color": "rev" }
+  ],
+  "income": {
+    "prefixes": ["rev:", "grp:"],
+    "ids": ["fin:extin", "fin:domin", "fin:dbs", "fin:onl_in", "fin:projl", "fin:projl04", "fin:projl06", "fin:newsec", "fin:refin_in", "fin:repay_in"]
+  },
+  "negative": ["rev:refunds"],
+  "levels": [
+    { "id": "central", "label": "central", "sections": ["central"], "nodes": ["dest:central"] },
+    { "id": "municipal", "label": "municipal", "sections": ["municipal"], "nodes": ["dest:local"] }
+  ],
+  "chunks": { "central": ["central"], "municipal": ["municipal"], "capital": ["capital"] },
+  "tabs": [
+    {
+      "id": "flow", "layout": "sankey", "title": "s1", "width": 3200, "height": 1500,
+      "columns": [
+        { "x": 380, "header": "in", "labelSide": "left",
+          "nodes": ["rev:vatbor", "rev:vatdom", "rev:excise", "rev:pit", "rev:cit", "rev:customs", "rev:prop", "rev:dother", "rev:iother", "rev:feesc", "rev:feesl", "rev:conc", "rev:mining", "rev:divid", "rev:intinc", "rev:gbs", "rev:gdon", "fin:dbs", "fin:projl06", "fin:projl04", "fin:onl_in", "fin:refin_in", "fin:newsec", "fin:repay_in"] },
+        { "x": 860, "header": "grp", "nodes": ["grp:taxgross", "rev:nontax", "rev:grants", "fin:extin", "fin:domin"] },
+        { "x": 1280, "header": "pool", "nodes": ["pool", "rev:refunds"] },
+        { "x": 1680, "header": "uses", "nodes": ["budget", "dest:donor", "fin:principal", "fin:domout", "fin:bank", "pool/diff"] },
+        { "x": 2120, "header": "dest", "nodes": ["dest:central", "dest:local", "dest:interest", "fin:refin_out", "fin:onl_out", "fin:lend", "fin:capz", "fin:ifi"] },
+        { "x": 2580, "header": "cats", "labelWidth": 420, "headerWidth": 420,
+          "nodes": ["cat:subs", "cat:capital", "cat:wages", "cat:goods", "cat:util", "cat:reserve", "cat:interest", "cat:donor", "dest:central/diff", "dest:local/diff"] }
+      ]
+    },
+    { "id": "central", "layout": "cards", "title": "s2", "chunk": "central", "kind": "org", "columns": 8 },
+    {
+      "id": "municipal", "layout": "cards", "title": "s3", "chunk": "municipal", "kind": "municipality", "columns": 8, "note": "noPop",
+      "sort": [
+        { "id": "amount", "label": "byAmount" },
+        { "id": "name", "label": "byName" },
+        { "id": "wages", "label": "byWages", "share": "wages" },
+        { "id": "capital", "label": "byCapital", "share": "capital" }
+      ]
+    },
+    { "id": "capital", "layout": "ranking", "title": "s4", "chunk": "capital", "kind": "project", "top": 150, "perColumn": 50, "category": "capital" },
+    { "id": "findings", "layout": "checks", "title": "s5" }
+  ],
+  "panel": {
+    "prevCol": "y2025",
+    "sourceRefCol": "total_2026",
+    "revenueCol": "y2026",
+    "checkRefCol": "y2026",
+    "extraRefs": [
+      { "field": "annex_ref", "col": "total", "label": { "sq": "Shtojca 1", "en": "Shtojca 1" } },
+      { "field": "summary_ref", "col": "total", "label": { "sq": "Struktura e shpenzimeve", "en": "Struktura e shpenzimeve" } }
+    ],
+    "multiYear": ["spent_to_2025", "cont_2026", "new_2026", "total_2026", "y2027", "y2028", "y2029plus", "project_total"]
+  },
+  "columns": {
+    "total": "Total", "staff": "Staff", "wages": "Paga", "goods": "Mallra", "util": "Komunale", "subs": "Subv./Transf.", "capital": "Kapitale",
+    "reserve": "Rezerva", "interest": "Interesi", "y2026": "2026", "y2027": "2027", "y2028": "2028", "spent_to_2025": "Shpenz. deri 2025",
+    "cont_2026": "Vazhdim", "new_2026": "Të reja", "total_2026": "Totali 2026", "y2029plus": ">2029", "project_total": "Vlera totale"
+  },
+  "flags": {
+    "ZERO_2026": { "sq": "€0 në 2026", "en": "€0 in 2026" }
+  },
+  "filters": { "minAmounts": [0, 100000, 1000000, 10000000, 50000000] },
+  "strings": {
+    "sq": {
+      "title": "Buxheti i Kosovës 2026",
+      "sub": "Ligji Nr. 10/L-001 · çdo shumë me burim në PDF",
+      "documentTitle": "Buxheti i Kosovës 2026 · Vizualizues i buxhetit",
+      "s1": "Nga vijnë paratë dhe ku shkojnë",
+      "s2": "Niveli qendror sipas institucionit",
+      "s3": "Komunat",
+      "s4": "Projektet kapitale më të mëdha (2026)",
+      "s5": "Rakordimi dhe gjetjet",
+      "in": "Të hyrat dhe financimi", "grp": "Grupet", "pool": "Gjithsej", "uses": "Përdorimet", "dest": "Destinacionet", "cats": "Kategoritë ekonomike",
+      "level": ["Pamja e përgjithshme: vetëm totalet", "Organizatat dhe komunat sipas kategorisë", "Programet, nënprogramet, projektet"],
+      "shareTotal": "e buxhetit total (Tabela 2)",
+      "rev_h": "Të hyrat komunale (Tabela 4.3)",
+      "noPop": "Dokumenti nuk jep popullsinë e komunave, ndaj nuk ka shuma për banor.",
+      "central": "Niveli qendror", "municipal": "Komunat",
+      "byWages": "Pjesa e pagave", "byCapital": "Pjesa kapitale",
+      "prevYear": "2025",
+      "stockNote": "Stok në fund të vitit, jo rrjedhë e 2026",
+      "tab_flow": "Të hyrat dhe shpenzimet", "tab_central": "Niveli qendror", "tab_municipal": "Komunat", "tab_capital": "Projektet kapitale", "tab_findings": "Gjetjet"
+    },
+    "en": {
+      "title": "Kosovo budget 2026",
+      "sub": "Law No. 10/L-001 · every amount traced to the PDF",
+      "documentTitle": "Kosovo budget 2026 · Budget visualizer",
+      "s1": "Where the money comes from and where it goes",
+      "s2": "Central government by institution",
+      "s3": "Municipalities",
+      "s4": "Largest capital projects (2026)",
+      "s5": "Reconciliation and findings",
+      "in": "Income and financing", "grp": "Groups", "pool": "Total", "uses": "Uses", "dest": "Destinations", "cats": "Economic categories",
+      "level": ["Overview: totals only", "Organisations and municipalities by category", "Programmes, sub-programmes, projects"],
+      "shareTotal": "of the total budget (Table 2)",
+      "rev_h": "Municipal revenue (Table 4.3)",
+      "noPop": "The document gives no municipal population, so no per-capita amounts are shown.",
+      "central": "Central government", "municipal": "Municipalities",
+      "byWages": "Wage share", "byCapital": "Capital share",
+      "prevYear": "2025",
+      "stockNote": "End-of-year stock, not a 2026 flow",
+      "tab_flow": "Income and spending", "tab_central": "Central government", "tab_municipal": "Municipalities", "tab_capital": "Capital projects", "tab_findings": "Findings"
+    }
+  },
+  "assumptions": {
+    "en": [
+      "No tolerance anywhere: every printed relation is checked with exact decimal arithmetic on the digits as printed. A failure is labelled “rounding only” when rounding of the printed digits could explain it, otherwise “arithmetic error”; both are shown.",
+      "Where the same figure is printed in euros in one table and in € million in another, the euro figure must round to the printed digits exactly.",
+      "The 2026 column of Tables 1 and 1.1 is the fourth numeric column (headed \"2026 Proj.\").",
+      "Taxes are not earmarked. Flows from a tax line to an institution are never drawn; tours say where the trail becomes proportional.",
+      "Links from Table 1.1 project loans to \"Financimi nga Huamarrja\" / \"Klauzola e Investimeve\" rows are matched by funding-source label, not stated in the document.",
+      "Institution totals = Table 3.1 + Table 3.1.B; municipality totals = Table 4.1 + Table 4.1.B.",
+      "Tax refunds (−102.9M) are drawn as an outflow from gross tax revenue.",
+      "English labels are our translations unless marked otherwise; municipality names are kept as proper nouns.",
+      "Full institution names come from Shtojca 1 where Table 3.1 cuts them off.",
+      "Filters dim items instead of hiding them, so the layout never changes."
+    ],
+    "sq": [
+      "Pa tolerancë: çdo lidhje e shtypur kontrollohet me aritmetikë decimale të saktë mbi shifrat siç janë shtypur. Një dështim quhet “vetëm rrumbullakim” kur rrumbullakimi i shifrave të shtypura mund ta shpjegojë, përndryshe “gabim aritmetik”; të dyja shfaqen.",
+      "Kur e njëjta shifër shtypet në euro në një tabelë dhe në milionë € në një tjetër, shifra në euro duhet të rrumbullakohet saktësisht në shifrat e shtypura.",
+      "Kolona 2026 e Tabelave 1 dhe 1.1 është kolona e katërt numerike (\"2026 Proj.\").",
+      "Tatimet nuk janë të destinuara. Nuk vizatohen rrjedha nga një tatim te një institucion.",
+      "Lidhjet nga projekt-kreditë te rreshtat \"Financimi nga Huamarrja\"/\"Klauzola e Investimeve\" bëhen sipas emrit të burimit të financimit.",
+      "Totali i institucionit = Tabela 3.1 + 3.1.B; totali i komunës = Tabela 4.1 + 4.1.B.",
+      "Rimbursimet tatimore (−102.9M) vizatohen si dalje nga të hyrat tatimore bruto.",
+      "Emrat në anglisht janë përkthime tona; emrat e komunave mbahen si emra të përveçëm.",
+      "Emrat e plotë të institucioneve merren nga Shtojca 1 kur Tabela 3.1 i shkurton.",
+      "Filtrat zbehin elementet, nuk i fshehin, që paraqitja të mos ndryshojë."
+    ]
+  }
+}

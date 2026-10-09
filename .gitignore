@@ -1,0 +1,12 @@
+node_modules/
+dist/
+dist-single/
+dist-fixture/
+test-results/
+playwright-report/
+tests/shots/
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+datasets/*/spotcheck.json

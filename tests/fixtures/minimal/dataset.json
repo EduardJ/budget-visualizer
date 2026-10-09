@@ -1,0 +1,122 @@
+{
+  "$schema": "../../../schema/dataset.schema.json",
+  "id": "minimal",
+  "pdf": "sample.pdf",
+  "sourceLang": "en",
+  "langs": [
+    "en"
+  ],
+  "currency": "$",
+  "totals": {
+    "budget": "pool",
+    "inflows": "pool"
+  },
+  "categories": [
+    {
+      "id": "wages",
+      "color": "#2e7d6b",
+      "name": {
+        "en": "Wages"
+      }
+    },
+    {
+      "id": "goods",
+      "color": "#6f5aa8",
+      "name": {
+        "en": "Goods and services"
+      }
+    },
+    {
+      "id": "capital",
+      "color": "#2f7fb8",
+      "name": {
+        "en": "Capital investment"
+      }
+    }
+  ],
+  "colorRules": [
+    {
+      "prefix": "rev:",
+      "color": "rev"
+    }
+  ],
+  "tabs": [
+    {
+      "id": "flow",
+      "layout": "sankey",
+      "title": "s1",
+      "width": 2200,
+      "height": 900,
+      "columns": [
+        {
+          "x": 380,
+          "header": "h_rev",
+          "labelSide": "left",
+          "nodes": [
+            "rev:tax",
+            "rev:fees",
+            "rev:grant"
+          ]
+        },
+        {
+          "x": 860,
+          "header": "h_pool",
+          "nodes": [
+            "pool"
+          ]
+        },
+        {
+          "x": 1280,
+          "header": "h_org",
+          "nodes": [
+            "org:roads",
+            "org:schools",
+            "org:admin"
+          ]
+        },
+        {
+          "x": 1700,
+          "header": "h_cat",
+          "nodes": [
+            "cat:wages",
+            "cat:goods",
+            "cat:capital"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "departments",
+      "layout": "cards",
+      "title": "s2",
+      "kind": "org",
+      "columns": 3
+    },
+    {
+      "id": "audit",
+      "layout": "checks",
+      "title": "s3"
+    }
+  ],
+  "strings": {
+    "en": {
+      "title": "Budget visualizer · Sample Town 2026",
+      "sub": "Synthetic test fixture",
+      "s1": "Where the money goes",
+      "s2": "Departments",
+      "s3": "Checks and findings",
+      "h_rev": "Revenue",
+      "h_pool": "Total",
+      "h_org": "Departments",
+      "h_cat": "Categories",
+      "tab_flow": "Money flow",
+      "tab_departments": "Departments",
+      "tab_audit": "Audit"
+    }
+  },
+  "assumptions": {
+    "en": [
+      "Synthetic data used to test that the viewer has nothing specific to one document."
+    ]
+  }
+}

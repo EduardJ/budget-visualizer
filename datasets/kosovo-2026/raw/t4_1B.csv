@@ -1,0 +1,16 @@
+table,page,top,kind,code,func,name,source,staff,wages,goods,util,subs,capital,reserve,total,y2027,y2028,raw
+4.1.B,356,91,org,616,,Prishtinë,,,,,,,1953100.0,,1953100.0,0.0,0.0,"616 Prishtinë 1,953,100 1,953,100 0 0"
+4.1.B,356,100,source,616,,Prishtinë,Klauzola e Investimeve,,,,,,1953100.0,,1953100.0,0.0,0.0,"Klauzola e Investimeve 1,953,100 1,953,100 0 0"
+4.1.B,356,109,prog,180,,"Shërbimet publike, mbro",,,,,,,1953100.0,,1953100.0,0.0,0.0,"180 Shërbimet publike, mbro 1,953,100 1,953,100 0 0"
+4.1.B,356,118,source,180,,"Shërbimet publike, mbro",Klauzola e Investimeve,,,,,,1953100.0,,1953100.0,0.0,0.0,"Klauzola e Investimeve 1,953,100 1,953,100 0 0"
+4.1.B,356,127,sub,18166,0451,Infrastruktura Publike,,,,,,,1953100.0,,1953100.0,0.0,0.0,"18166 0451 Infrastruktura Publike 1,953,100 1,953,100 0 0"
+4.1.B,356,136,source,18166,,Infrastruktura Publike,Klauzola e Investimeve,,,,,,1953100.0,,1953100.0,0.0,0.0,"Klauzola e Investimeve 1,953,100 1,953,100 0 0"
+4.1.B,356,145,org,622,,Prizreni,,,,,,,1400000.0,,1400000.0,0.0,0.0,"622 Prizreni 1,400,000 1,400,000 0 0"
+4.1.B,356,154,source,622,,Prizreni,Klauzola e Investimeve,,,,,,1400000.0,,1400000.0,0.0,0.0,"Klauzola e Investimeve 1,400,000 1,400,000 0 0"
+4.1.B,356,163,prog,175,,Buxhet dhe Financa,,,,,,,1400000.0,,1400000.0,0.0,0.0,"175 Buxhet dhe Financa 1,400,000 1,400,000 0 0"
+4.1.B,356,172,source,175,,Buxhet dhe Financa,Klauzola e Investimeve,,,,,,1400000.0,,1400000.0,0.0,0.0,"Klauzola e Investimeve 1,400,000 1,400,000 0 0"
+4.1.B,356,181,sub,17510,0112,Buxhetimi,,,,,,,1400000.0,,1400000.0,0.0,0.0,"17510 0112 Buxhetimi 1,400,000 1,400,000 0 0"
+4.1.B,356,190,source,17510,,Buxhetimi,Klauzola e Investimeve,,,,,,1400000.0,,1400000.0,0.0,0.0,"Klauzola e Investimeve 1,400,000 1,400,000 0 0"
+4.1.B,356,208,table_total,,,Total:,,0.0,0.0,0.0,,0.0,3353100.0,0.0,3353100.0,0.0,0.0,"Total: 0 0 0 0 3,353,100 0 3,353,100 0 0"
+4.1.B,356,221,table_total_src,,,Klauzola,Klauzola e Investimeve:,,0.0,0.0,,0.0,3353100.0,0.0,3353100.0,0.0,0.0,"Klauzola e Investimeve: 0 0 0 3,353,100 0 3,353,100 0 0"
+4.1.B,356,348,table_total_src,,,Buxheti i Përgjithshëm i Kosovës,,,,,,,,,,,,Buxheti i Përgjithshëm i Kosovës

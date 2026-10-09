@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dataset.schema.json",
+  "title": "Dataset presentation config (datasets/<id>/dataset.json)",
+  "description": "How the viewer presents one budget document. The numbers live in data.json; this file only says how to lay them out and what to call things.",
+  "type": "object",
+  "required": ["id", "pdf", "sourceLang", "langs", "totals", "categories", "tabs", "strings"],
+  "additionalProperties": false,
+  "$defs": {
+    "localized": {
+      "description": "Text per UI language, keyed by language code.",
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "nodeId": { "type": "string", "minLength": 1 },
+    "sankeyColumn": {
+      "type": "object",
+      "required": ["x", "header", "nodes"],
+      "additionalProperties": false,
+      "properties": {
+        "x": { "type": "number", "description": "World x of the column's bars." },
+        "header": { "type": "string", "description": "String key of the column header." },
+        "labelSide": { "enum": ["left", "right"], "default": "right" },
+        "labelWidth": { "type": "number", "default": 330 },
+        "headerWidth": { "type": "number", "default": 300, "description": "Header width for right-labelled columns; left-labelled headers span the label lane and the bar." },
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/nodeId" }, "description": "Nodes stacked top to bottom. Missing ids are skipped." }
+      }
+    },
+    "tab": {
+      "type": "object",
+      "required": ["id", "layout", "title"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z][a-z0-9-]*$" },
+        "layout": { "enum": ["sankey", "cards", "ranking", "checks"] },
+        "title": { "type": "string", "description": "String key of the section title drawn on the canvas." },
+        "chunk": { "type": "string", "description": "Data chunk this tab needs (see chunks). Omit for core data." }
+      },
+      "allOf": [
+        { "if": { "properties": { "layout": { "const": "sankey" } } },
+          "then": { "required": ["columns"], "properties": {
+            "width": { "type": "number", "default": 3200 },
+            "height": { "type": "number", "default": 1500, "description": "World height that the inflow pool maps to." },
+            "columns": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/sankeyColumn" } } } } },
+        { "if": { "properties": { "layout": { "const": "cards" } } },
+          "then": { "required": ["kind"], "properties": {
+            "kind": { "type": "string", "description": "Node kind that gets one card each (children become rows)." },
+            "columns": { "type": "integer", "minimum": 1, "default": 8 },
+            "note": { "type": "string", "description": "String key of a note drawn under the title." },
+            "sort": { "type": "array", "items": { "type": "object", "required": ["id", "label"], "additionalProperties": false, "properties": {
+              "id": { "type": "string" }, "label": { "type": "string" },
+              "share": { "type": "string", "description": "Sort by this category's share of the card total instead of amount/name." } } } } } } },
+        { "if": { "properties": { "layout": { "const": "ranking" } } },
+          "then": { "required": ["kind"], "properties": {
+            "kind": { "type": "string" },
+            "top": { "type": "integer", "minimum": 1, "default": 150 },
+            "perColumn": { "type": "integer", "minimum": 1, "default": 50 },
+            "category": { "type": "string", "description": "Economic category every ranked item belongs to (bar colour, category filter)." } } } }
+      ]
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "Folder name under datasets/." },
+    "pdf": { "type": "string", "description": "Source PDF file name inside the dataset folder; published next to index.html." },
+    "sourceLang": { "type": "string", "description": "Language the document is written in. name_<sourceLang> is every node's printed name." },
+    "langs": { "type": "array", "minItems": 1, "items": { "type": "string" }, "description": "UI languages, first is the default." },
+    "currency": { "type": "string", "default": "€" },
+    "numberLocale": { "type": "string", "default": "en-US", "description": "Digit grouping of amounts (Intl.NumberFormat locale)." },
+    "totals": {
+      "type": "object", "required": ["budget"], "additionalProperties": false,
+      "properties": {
+        "budget": { "$ref": "#/$defs/nodeId", "description": "Node whose amount is 'the total budget' for share-of-total figures." },
+        "inflows": { "$ref": "#/$defs/nodeId", "description": "Node whose amount is 'all inflows' for income share figures." }
+      }
+    },
+    "categories": {
+      "type": "array", "minItems": 1,
+      "items": { "type": "object", "required": ["id", "color", "name"], "additionalProperties": false,
+        "properties": { "id": { "type": "string" }, "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }, "name": { "$ref": "#/$defs/localized" } } },
+      "description": "Economic categories in display order. Node ids cat:<id> are the category nodes."
+    },
+    "colorRules": {
+      "type": "array",
+      "items": { "type": "object", "required": ["prefix", "color"], "additionalProperties": false,
+        "properties": {
+          "prefix": { "type": "string" },
+          "color": { "enum": ["rev", "fin", "gold", "flag", "ink3"] },
+          "ribbon": { "enum": ["source", "either"], "default": "source", "description": "Which end of a ribbon the prefix is matched against." } } }
+    },
+    "income": {
+      "type": "object", "additionalProperties": false,
+      "properties": { "prefixes": { "type": "array", "items": { "type": "string" } }, "ids": { "type": "array", "items": { "type": "string" } } },
+      "description": "Nodes whose share is shown 'of all inflows' instead of 'of the total budget'."
+    },
+    "negative": { "type": "array", "items": { "type": "string" }, "description": "Nodes stored as positive amounts but shown with a minus sign (e.g. refunds)." },
+    "levels": {
+      "type": "array",
+      "items": { "type": "object", "required": ["id", "label", "sections"], "additionalProperties": false,
+        "properties": { "id": { "type": "string" }, "label": { "type": "string" }, "sections": { "type": "array", "items": { "type": "string" } }, "nodes": { "type": "array", "items": { "type": "string" } } } },
+      "description": "Government levels the filter can dim (by node section, plus extra node ids)."
+    },
+    "chunks": {
+      "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } },
+      "description": "Lazy data chunks: chunk name -> node sections it holds. Everything else, and every node drawn on a sankey tab, is in the core chunk."
+    },
+    "tabs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/tab" } },
+    "panel": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "prevCol": { "type": "string", "description": "Ref column holding the previous year's value." },
+        "sourceRefCol": { "type": "string", "description": "Column shown for funding-source refs (src_refs)." },
+        "revenueCol": { "type": "string" },
+        "checkRefCol": { "type": "string" },
+        "extraRefs": { "type": "array", "items": { "type": "object", "required": ["field", "label"], "additionalProperties": false,
+          "properties": { "field": { "type": "string" }, "col": { "type": "string" }, "label": { "$ref": "#/$defs/localized" } } } },
+        "multiYear": { "type": "array", "items": { "type": "string" }, "description": "Keys of node.multi, in display order." }
+      }
+    },
+    "columns": { "type": "object", "additionalProperties": { "type": "string" }, "description": "Display names of ref value columns." },
+    "flags": { "type": "object", "additionalProperties": { "$ref": "#/$defs/localized" }, "description": "Labels for dataset-specific node flags." },
+    "filters": { "type": "object", "additionalProperties": false, "properties": { "minAmounts": { "type": "array", "items": { "type": "number" } } } },
+    "strings": {
+      "type": "object", "additionalProperties": { "type": "object", "additionalProperties": { "anyOf": [{ "type": "string" }, { "type": "array", "items": { "type": "string" } }] } },
+      "description": "Per-language strings. Required per language: title, sub, every tab's title key and tab_<id>; any built-in UI string can be overridden here."
+    },
+    "assumptions": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } }
+  }
+}
